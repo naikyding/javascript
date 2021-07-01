@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>promise all</title>
+</head>
+<body>
+  <script>
+    // CONFIG
+    const fun1 = () => new Promise((resolve, reject)=>{
+      // resolve('Resolve Done1')
+      reject('Reject1!!')
+    })
+    
+    const fun2 = () => new Promise((resolve, reject)=>{
+      // resolve('Resolve Done2')
+      reject(`依序執行 => Reject2!!`)
+    })
+    const fun3 = () => new Promise((resolve, reject)=>{
+      resolve(`依序執行 => Resolve Done3`)
+      // reject('Reject3!!')
+    })
+    const fun4 = () => new Promise((resolve, reject)=>{
+      // resolve('Resolve Done4')
+      reject(`依序執行 => Reject4!!`)
+    })
+
+    // 依序執行 promise
+    fun1()
+    .then((resolve)=>{
+      console.log(resolve)
+      // 回傳 fun2 給下一個 then 接
+      return fun2()
+    },(err) => {
+      console.log(err)
+      return fun2()
+    })
+    // 執行 fun2()
+    .then((resolve)=>{
+      console.log(resolve)
+      return fun3()
+    }, (err)=> {
+      console.log(err)
+      return fun3()
+    })
+     // 執行 fun3()
+    .then((resolve)=>{
+      console.log(resolve)
+      return fun4()
+    }, (err)=> {
+      console.log(err)
+      return fun4()
+    })
+     // 執行 fun4()
+    .then((resolve)=>{
+      console.log(resolve)
+      // done() // 最後一步完成後執行
+    }, (err)=> {
+      console.log(err)
+      // done()
+    })
+
+  // Promise all
+  const task1 = () => new Promise((resolve, reject) => {
+    setTimeout(resolve('task1'), 100);
+  });
+  const task2 = () => new Promise((resolve, reject) => {
+    setTimeout(reject('reject => task2'), 100);
+  });
+  const task3 = () => new Promise((resolve, reject) => {
+    setTimeout(resolve('task3'), 100);
+  });
+
+  Promise.all([
+    task1(),
+    task2(),
+    task3(),
+  ]).then(values => {
+    console.log(values)
+  }, err => {console.error(err)})
+  // 你也可以使用這個方法來接 reject
+  // .catch(err=> {console.error(err)})
+  </script>
+</body>
+</html>

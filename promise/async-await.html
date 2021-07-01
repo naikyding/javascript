@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>async await</title>
+</head>
+<body>
+  <script>
+    const fun1 = () => new Promise((resolve, reject)=>{
+      resolve('Resolve Done1')
+      // reject('Reject1!!')
+    })
+    
+    const fun2 = (data) => {
+      
+      return new Promise((resolve, reject)=>{
+        
+        console.log(`fun2 => ${data}`)
+        // resolve('Resolve Done2')
+        // reject(`依序執行 => Reject2!!`)
+      })
+    }
+    const fun3 = () => new Promise((resolve, reject)=>{
+      resolve(`依序執行 => Resolve Done3`)
+      // reject('Reject3!!')
+    })
+    const fun4 = () => new Promise((resolve, reject)=>{
+      // resolve('Resolve Done4')
+      reject(`依序執行 => Reject4!!`)
+    })
+
+    const fetch1 = async () => {
+      try{
+        const res = await fun1()
+        return res
+      }catch(err){
+        console.error(err)
+      }
+    }
+    const fetch2 = async () => {
+      try{
+        const res = await fun2()
+        return res
+      }catch(err){
+        console.error(err)
+      }
+    }
+
+    const fetchAll = async () => {
+      const res = await fetch1()
+      const res2 = await fetch2(res)
+      console.log(`fetchAll => ${res2}`)
+    }
+    fetchAll()
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise</title>
+</head>
+<body>
+  <h1>Promise</h1>
+  <script>
+
+    const fun1 = () => new Promise((resolve, reject)=>{
+      // resolve('Resolve Done1')
+      reject('Reject1!!')
+    })
+    
+    const fun2 = () => new Promise((resolve, reject)=>{
+      // resolve('Resolve Done2')
+      reject(`依序執行 => Reject2!!`)
+    })
+    const fun3 = () => new Promise((resolve, reject)=>{
+      resolve(`依序執行 => Resolve Done3`)
+      // reject('Reject3!!')
+    })
+    const fun4 = () => new Promise((resolve, reject)=>{
+      // resolve('Resolve Done4')
+      reject(`依序執行 => Reject4!!`)
+    })
+
+    // 基本使用
+    fun1()
+    .then( resolve => {
+      console.log(`基本操作 => ${resolve}`)
+    },(err) => {
+      console.log(`基本操作11 => ${err}`)
+    })
+    .catch(err=> {
+      console.log(`基本操作 => ${err}`)
+    })
+
+    
+  </script>
+</body>
+</html>
